@@ -1,0 +1,8 @@
+{
+  "*.(js|jsx|md|ts|tsx|css|sass|less|graphql|yml|yaml|scss|json|vue)": [
+    "yarn lint",
+    "yarn prettier --write",
+    "yarn test -- --passWithNoTests",
+    "git add"
+  ]
+}
