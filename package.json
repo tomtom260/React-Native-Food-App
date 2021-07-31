@@ -9,13 +9,13 @@
     "lint": "eslint --ext .tsx --ext .ts src/",
     "prepare": "husky install",
     "precommit": "lint-staged",
-    "test": "jest"
+    "test": "jest --config=jest.config.json"
   },
   "dependencies": {
     "expo": "~42.0.1",
     "expo-status-bar": "~1.0.4",
     "react": "16.13.1",
-    "react-dom": "16.13.1",
+    "react-dom": "^17.0.2",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
     "react-native-web": "~0.13.12"
   },
@@ -25,6 +25,8 @@
     "@types/react-native": "~0.63.2",
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
     "eslint": "7.2.0",
     "eslint-config-airbnb": "18.2.1",
     "eslint-config-prettier": "^8.3.0",
@@ -34,6 +36,8 @@
     "eslint-plugin-react": "7.21.5",
     "eslint-plugin-react-hooks": "1.7.0",
     "husky": "^7.0.0",
+    "jest-environment-enzyme": "^7.1.2",
+    "jest-enzyme": "^7.1.2",
     "lint-staged": "^11.1.1",
     "prettier": "^2.3.2",
     "typescript": "~4.0.0"

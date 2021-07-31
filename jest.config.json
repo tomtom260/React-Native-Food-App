@@ -1,0 +1,8 @@
+{
+  "presets": ["react-native"],
+  "setupTestFrameworkScriptFile": "jest-enzyme",
+  "testEnvironment": "enzyme",
+  "testEnvironmentOptions": {
+    "enzymeAdapter": "react16"
+  }
+}
