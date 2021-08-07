@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 import 'react-native-gesture-handler';
-import Ionicons from '@expo/vector-icons/Ionicons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React, { ReactElement } from 'react';
@@ -21,7 +20,8 @@ import { ThemeProvider } from 'styled-components';
 import RestaurantsScreen from './src/Screen/Restaurants';
 import MapsScreen from './src/Screen/Maps';
 import SettingsScreen from './src/Screen/Settings';
-import theme from './src/theme';
+import theme from './src/context/theme';
+import { RestaurantsProvider } from './src/context/state/restaurants';
 
 const StyledSafeAreaView = styled(SafeAreaView)`
   flex: 1;
@@ -45,15 +45,18 @@ export default function App(): ReactElement {
   return (
     <>
       <StyledSafeAreaView>
-        <ThemeProvider theme={theme}>
-          <NavigationContainer>
-            <TabNavigation.Navigator
-              initialRouteName="Restaurants"
-              screenOptions={({ route }) => ({
-                tabBarIcon: ({ color }) => {
-                  if (route.name === 'Settings') {
-                    return <Octicons name="settings" color={color} size={24} />;
-                  } else {
+        <RestaurantsProvider>
+          <ThemeProvider theme={theme}>
+            <NavigationContainer>
+              <TabNavigation.Navigator
+                initialRouteName="Settings"
+                screenOptions={({ route }) => ({
+                  tabBarIcon: ({ color }): ReactElement | undefined => {
+                    if (route.name === 'Settings') {
+                      return (
+                        <Octicons name="settings" color={color} size={24} />
+                      );
+                    }
                     if (route.name === 'Restaurants') {
                       return (
                         <MaterialIcons
@@ -62,7 +65,8 @@ export default function App(): ReactElement {
                           color={color}
                         />
                       );
-                    } else if (route.name === 'Map') {
+                    }
+                    if (route.name === 'Map') {
                       return (
                         <MaterialCommunityIcons
                           name="map-outline"
@@ -71,27 +75,28 @@ export default function App(): ReactElement {
                         />
                       );
                     }
-                  }
-                },
-              })}
-              tabBarOptions={{
-                activeTintColor: 'tomato',
-                inactiveTintColor: 'gray',
-              }}
-            >
-              <TabNavigation.Screen
-                name="Restaurants"
-                component={RestaurantsScreen}
-              />
+                    return undefined;
+                  },
+                })}
+                tabBarOptions={{
+                  activeTintColor: 'tomato',
+                  inactiveTintColor: 'gray',
+                }}
+              >
+                <TabNavigation.Screen
+                  name="Restaurants"
+                  component={RestaurantsScreen}
+                />
 
-              <TabNavigation.Screen name="Map" component={MapsScreen} />
-              <TabNavigation.Screen
-                name="Settings"
-                component={SettingsScreen}
-              />
-            </TabNavigation.Navigator>
-          </NavigationContainer>
-        </ThemeProvider>
+                <TabNavigation.Screen name="Map" component={MapsScreen} />
+                <TabNavigation.Screen
+                  name="Settings"
+                  component={SettingsScreen}
+                />
+              </TabNavigation.Navigator>
+            </NavigationContainer>
+          </ThemeProvider>
+        </RestaurantsProvider>
       </StyledSafeAreaView>
       <StatusBar />
     </>

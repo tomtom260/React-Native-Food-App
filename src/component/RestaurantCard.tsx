@@ -69,7 +69,7 @@ function RestaurantCard({
   isClosedTemporarily = true,
   icon = 'https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png',
 }: RestaurantCardProps): ReactElement {
-  const ratingArray = Array.from(new Array(rating));
+  // const ratingArray = Array.from(new (rating));
 
   return (
     <StyledCard elevation={5}>
@@ -78,7 +78,7 @@ function RestaurantCard({
         <StyledText>{name}</StyledText>
         <StyledRow>
           <StyledRating>
-            {ratingArray.map((el, index) => (
+            {Array.from(new Array(Math.floor(rating))).map((el, index) => (
               // eslint-disable-next-line react/no-array-index-key
               <SvgXml key={index} xml={starSvg} width={20} height={20} />
             ))}
