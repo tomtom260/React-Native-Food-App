@@ -1,7 +1,8 @@
 import React, { ReactElement, useState, useContext, useEffect } from 'react';
-import { FlatList, Text } from 'react-native';
+import { FlatList, Text, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
-import { Searchbar } from 'react-native-paper';
+import { Searchbar, ActivityIndicator } from 'react-native-paper';
+import { StackNavigationProp } from '@react-navigation/stack';
 import RestaurantCard, {
   RestaurantCardProps,
 } from '../component/RestaurantCard';
@@ -10,22 +11,32 @@ import {
   RestaurantsType,
   Cities,
 } from '../context/state/restaurants';
+import { RestaurantNavigatorParamList } from '../navigation/Restaurants';
 
 const StyledSearchContainer = styled.View`
   padding: ${({ theme }) => theme.space[3]};
 `;
 
-const StyledLoadingContainer = styled.View`
+const StyledContainer = styled.View`
   align-items: center;
   justify-content: center;
 `;
 
-const renderRestaurantList = ({ item }: { item: RestaurantCardProps }) => (
+const renderRestaurantList = (item: RestaurantCardProps) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
   <RestaurantCard {...item} />
 );
 
-export default function Restaurants(): ReactElement {
+type NavigationScreenProps = StackNavigationProp<
+  RestaurantNavigatorParamList,
+  'Restaurants'
+>;
+
+interface AppProps {
+  navigation: NavigationScreenProps;
+}
+
+export default function Restaurants({ navigation }: AppProps): ReactElement {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const { restaurants, setKeyword, loading, onSearch } =
     useContext<RestaurantsType>(RestaurantsContext);
@@ -35,9 +46,7 @@ export default function Restaurants(): ReactElement {
   }, [onSearch]);
 
   return loading ? (
-    <StyledLoadingContainer>
-      <Text>LOADING</Text>
-    </StyledLoadingContainer>
+    <ActivityIndicator animating={loading} />
   ) : (
     <>
       <StyledSearchContainer>
@@ -55,13 +64,23 @@ export default function Restaurants(): ReactElement {
           // eslint-disable-next-line react-native/no-inline-styles
           contentContainerStyle={{ margin: 16 }}
           data={restaurants}
-          renderItem={renderRestaurantList}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Restaurant Detail', {
+                  item,
+                });
+              }}
+            >
+              {renderRestaurantList(item)}
+            </TouchableOpacity>
+          )}
           keyExtractor={item => item.name!}
         />
       ) : (
-        <StyledLoadingContainer>
+        <StyledContainer>
           <Text>Empty</Text>
-        </StyledLoadingContainer>
+        </StyledContainer>
       )}
     </>
   );

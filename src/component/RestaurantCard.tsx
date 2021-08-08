@@ -52,7 +52,7 @@ export interface RestaurantCardProps {
   name?: string;
   icon?: string;
   photos?: string[];
-  address?: string;
+  vicinity?: string;
   isOpenNow?: boolean;
   rating?: number;
   isClosedTemporarily?: boolean;
@@ -63,7 +63,7 @@ function RestaurantCard({
   photos = [
     'https://www.foodiesfeed.com/wp-content/uploads/2019/06/top-view-for-box-of-2-burgers-home-made-600x899.jpg',
   ],
-  address = '100 Random Street',
+  vicinity: address = '100 Random Street',
   rating = 4,
   isOpenNow = true,
   isClosedTemporarily = true,
