@@ -1,5 +1,8 @@
 import React, { ReactElement } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import {
+  NavigationContainer,
+  NavigatorScreenParams,
+} from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   MaterialCommunityIcons,
@@ -9,14 +12,22 @@ import {
 
 import MapsScreen from '../Screen/Maps';
 import SettingsScreen from '../Screen/Settings';
-import RestaurantsNavigator from './Restaurants';
+import RestaurantsNavigator, {
+  RestaurantNavigatorParamList,
+} from './Restaurants';
 
-const TabNavigation = createBottomTabNavigator();
+export type TabParamList = {
+  'Restaurants Tab': NavigatorScreenParams<RestaurantNavigatorParamList>;
+  Map: undefined;
+  Settings: undefined;
+};
+
+const TabNavigation = createBottomTabNavigator<TabParamList>();
 function TabNavigator(): ReactElement {
   return (
     <NavigationContainer>
       <TabNavigation.Navigator
-        initialRouteName="Restaurants"
+        initialRouteName="Restaurants Tab"
         screenOptions={({ route }) => ({
           headerShown: false,
           tabBarIcon: ({ color }): ReactElement | undefined => {

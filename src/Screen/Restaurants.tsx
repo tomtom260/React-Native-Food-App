@@ -1,7 +1,7 @@
 import React, { ReactElement, useState, useContext, useEffect } from 'react';
 import { FlatList, Text, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
-import { Searchbar, ActivityIndicator } from 'react-native-paper';
+import { Searchbar } from 'react-native-paper';
 import { StackNavigationProp } from '@react-navigation/stack';
 import RestaurantCard, {
   RestaurantCardProps,
@@ -12,6 +12,7 @@ import {
   Cities,
 } from '../context/state/restaurants';
 import { RestaurantNavigatorParamList } from '../navigation/Restaurants';
+import LoadingContainer from '../component/LoadingContainer';
 
 const StyledSearchContainer = styled.View`
   padding: ${({ theme }) => theme.space[3]};
@@ -37,7 +38,8 @@ interface AppProps {
 }
 
 export default function Restaurants({ navigation }: AppProps): ReactElement {
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const { keyword } = useContext(RestaurantsContext);
+  const [searchQuery, setSearchQuery] = useState<string>(keyword);
   const { restaurants, setKeyword, loading, onSearch } =
     useContext<RestaurantsType>(RestaurantsContext);
 
@@ -45,9 +47,13 @@ export default function Restaurants({ navigation }: AppProps): ReactElement {
     onSearch();
   }, [onSearch]);
 
-  return loading ? (
-    <ActivityIndicator animating={loading} />
-  ) : (
+  useEffect(() => {
+    setSearchQuery(keyword);
+  }, [keyword]);
+
+  if (loading) return <LoadingContainer />;
+
+  return (
     <>
       <StyledSearchContainer>
         <Searchbar
@@ -62,6 +68,7 @@ export default function Restaurants({ navigation }: AppProps): ReactElement {
       {restaurants.length ? (
         <FlatList<RestaurantCardProps>
           // eslint-disable-next-line react-native/no-inline-styles
+          removeClippedSubviews={false}
           contentContainerStyle={{ margin: 16 }}
           data={restaurants}
           renderItem={({ item }) => (
