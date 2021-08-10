@@ -1,7 +1,7 @@
 import React, { ReactElement, useState, useContext, useEffect } from 'react';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import styled from 'styled-components/native';
-import { ActivityIndicator, Searchbar } from 'react-native-paper';
+import { Searchbar } from 'react-native-paper';
 import { CompositeNavigationProp } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { StackNavigationProp } from '@react-navigation/stack';

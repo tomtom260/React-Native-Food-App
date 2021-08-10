@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 import { SvgXml } from 'react-native-svg';
 import starSvg from '../../assets/svgStar';
 import openSvg from '../../assets/svgOpen';
+import FavouriteButton from './FavouriteButton';
 
 const StyledInfo = styled.View`
   padding: ${props => props.theme.space[3]};
@@ -56,23 +57,25 @@ export interface RestaurantCardProps {
   isOpenNow?: boolean;
   rating?: number;
   isClosedTemporarily?: boolean;
+  placeId: string;
 }
 
-function RestaurantCard({
-  name = 'Some Restaurant',
-  photos = [
-    'https://www.foodiesfeed.com/wp-content/uploads/2019/06/top-view-for-box-of-2-burgers-home-made-600x899.jpg',
-  ],
-  vicinity: address = '100 Random Street',
-  rating = 4,
-  isOpenNow = true,
-  isClosedTemporarily = true,
-  icon = 'https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png',
-}: RestaurantCardProps): ReactElement {
-  // const ratingArray = Array.from(new (rating));
+function RestaurantCard(restaurant: RestaurantCardProps): ReactElement {
+  const {
+    name = 'Some Restaurant',
+    photos = [
+      'https://www.foodiesfeed.com/wp-content/uploads/2019/06/top-view-for-box-of-2-burgers-home-made-600x899.jpg',
+    ],
+    vicinity: address = '100 Random Street',
+    rating = 4,
+    isOpenNow = true,
+    isClosedTemporarily = true,
+    icon = 'https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png',
+  } = restaurant;
 
   return (
     <StyledCard elevation={5}>
+      <FavouriteButton restaurant={restaurant} />
       <StyledCardCover key={name} source={{ uri: photos[0] }} />
       <StyledInfo>
         <StyledText>{name}</StyledText>

@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { Platform } from 'react-native';
 import { WebView } from 'react-native-webview';
 import styled from 'styled-components/native';
-import { TransformedRestaurant as Restaurant } from '../context/state/restaurants';
+import { Restaurant } from '../context/state/restaurants';
 
 const StyledImage = styled.Image`
   border-radius: 10px;

@@ -14,6 +14,8 @@ import { ThemeProvider } from 'styled-components';
 import theme from './src/context/theme';
 import { RestaurantsProvider } from './src/context/state/restaurants';
 import TabNavigator from './src/navigation/TabNavigator';
+import { FavouritesProvider } from './src/context/state/favourites';
+import LoadingContainer from './src/component/LoadingContainer';
 
 const StyledSafeAreaView = styled(SafeAreaView)`
   flex: 1;
@@ -29,16 +31,18 @@ function App(): ReactElement {
   });
 
   if (!latoLoaded || !oswaldLoaded) {
-    return <ActivityIndicator animating />;
+    return <LoadingContainer />;
   }
 
   return (
     <>
       <StyledSafeAreaView>
         <RestaurantsProvider>
-          <ThemeProvider theme={theme}>
-            <TabNavigator />
-          </ThemeProvider>
+          <FavouritesProvider>
+            <ThemeProvider theme={theme}>
+              <TabNavigator />
+            </ThemeProvider>
+          </FavouritesProvider>
         </RestaurantsProvider>
       </StyledSafeAreaView>
       <StatusBar />

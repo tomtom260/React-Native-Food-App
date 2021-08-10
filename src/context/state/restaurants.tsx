@@ -44,9 +44,11 @@ type SnakeToCamelCase<S extends string> = S extends `${infer T}_${infer U}`
   ? `${T}${Capitalize<SnakeToCamelCase<U>>}`
   : S;
 
-export type TransformedRestaurant = {
+type TransformedRestaurant = {
   [K in keyof ModifiedRestaurants as SnakeToCamelCase<K>]: ModifiedRestaurants[K];
 };
+
+export { TransformedRestaurant as Restaurant };
 
 const fetchRestaurants = (city: Cities) => {
   const location = cityToCordinate(city);
