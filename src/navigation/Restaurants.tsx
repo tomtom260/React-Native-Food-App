@@ -1,8 +1,5 @@
 import React, { ReactElement } from 'react';
-import {
-  createStackNavigator,
-  TransitionPresets,
-} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import RestaurantsScreen from '../Screen/Restaurants';
 import RestaurantsDetailScreen from '../Screen/RestaurantsDetail';
 import { RestaurantCardProps } from '../component/RestaurantCard';
