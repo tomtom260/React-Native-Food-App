@@ -1,8 +1,19 @@
-import React, { ReactElement } from 'react';
-import { Text } from 'react-native';
+import React, { ReactElement, useContext } from 'react';
+import { Text, View } from 'react-native';
+import { Button } from 'react-native-paper';
+import { AuthContext } from '../context/auth';
 
 function SettingsScreen(): ReactElement {
-  return <Text>Settings</Text>;
+  const { signOut } = useContext(AuthContext);
+
+  return (
+    <View>
+      <Text>Settings</Text>
+      <Button mode="contained" onPress={() => signOut()}>
+        Logout
+      </Button>
+    </View>
+  );
 }
 
 export default SettingsScreen;

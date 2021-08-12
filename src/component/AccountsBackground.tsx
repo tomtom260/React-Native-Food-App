@@ -15,12 +15,6 @@ const StyledFilter = styled.View`
   height: 100%;
 `;
 
-const StyledContainer = styled.View`
-  background-color: rgba(255, 255, 255, 0.7);
-  padding: ${({ theme }) => theme.sizes[4]};
-  margin-top: ${({ theme }) => theme.space[2]};
-`;
-
 function AccountsBackground({
   children,
 }: {
@@ -30,7 +24,7 @@ function AccountsBackground({
     <>
       <StyledBackground>
         <StyledFilter />
-        <StyledContainer>{children}</StyledContainer>
+        {children}
       </StyledBackground>
     </>
   );
