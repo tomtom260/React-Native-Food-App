@@ -54,7 +54,7 @@ export interface RestaurantCardProps {
   icon?: string;
   photos?: string[];
   vicinity?: string;
-  isOpenNow?: boolean;
+  openNow?: boolean;
   rating?: number;
   isClosedTemporarily?: boolean;
   placeId: string;
@@ -68,7 +68,7 @@ function RestaurantCard(restaurant: RestaurantCardProps): ReactElement {
     ],
     vicinity: address = '100 Random Street',
     rating = 4,
-    isOpenNow = true,
+    openNow = true,
     isClosedTemporarily = true,
     icon = 'https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png',
   } = restaurant;
@@ -91,7 +91,7 @@ function RestaurantCard(restaurant: RestaurantCardProps): ReactElement {
             <StyledClosed>closed temporarily</StyledClosed>
           )}
           <StyledIconContainer>
-            {isOpenNow && <SvgXml xml={openSvg} width={20} height={20} />}
+            {openNow && <SvgXml xml={openSvg} width={20} height={20} />}
             <StyledImage source={{ uri: icon }} />
           </StyledIconContainer>
         </StyledRow>

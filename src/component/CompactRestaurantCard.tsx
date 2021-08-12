@@ -28,11 +28,13 @@ const StyledText = styled.Text`
 
 function CompactRestaurantCard({
   restaurant: { name, photos },
+  isMap = false,
 }: {
+  isMap?: boolean;
   restaurant: Restaurant;
 }): ReactElement {
   const CardImage = (
-    Platform.OS === 'android' ? StyledWebView : StyledImage
+    Platform.OS === 'android' && isMap ? StyledWebView : StyledImage
   ) as React.ElementType;
   return (
     <StyledItem>

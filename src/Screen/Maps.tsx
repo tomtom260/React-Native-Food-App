@@ -78,7 +78,7 @@ function MapsScreen({ navigation }: AppProps): ReactElement {
                 navigation.navigate('Restaurant Detail', { item: restaurant })
               }
             >
-              <CompactRestaurantCard restaurant={restaurant} />
+              <CompactRestaurantCard isMap restaurant={restaurant} />
             </Callout>
           </Marker>
         ))}

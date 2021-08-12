@@ -13,6 +13,7 @@ import {
 } from '../context/state/restaurants';
 import { RestaurantNavigatorParamList } from '../navigation/Restaurants';
 import LoadingContainer from '../component/LoadingContainer';
+import FavouritesBar from '../component/FavouritesBar';
 
 const StyledSearchContainer = styled.View`
   padding: ${({ theme }) => theme.space[3]};
@@ -28,7 +29,7 @@ const renderRestaurantList = (item: RestaurantCardProps) => (
   <RestaurantCard {...item} />
 );
 
-type NavigationScreenProps = StackNavigationProp<
+export type NavigationScreenProps = StackNavigationProp<
   RestaurantNavigatorParamList,
   'Restaurants'
 >;
@@ -38,9 +39,8 @@ interface AppProps {
 }
 
 export default function Restaurants({ navigation }: AppProps): ReactElement {
-  const { keyword } = useContext(RestaurantsContext);
   const [searchQuery, setSearchQuery] = useState<string>(keyword);
-  const { restaurants, setKeyword, loading, onSearch } =
+  const { restaurants, keyword,setKeyword, loading, onSearch } =
     useContext<RestaurantsType>(RestaurantsContext);
 
   useEffect(() => {
@@ -51,12 +51,15 @@ export default function Restaurants({ navigation }: AppProps): ReactElement {
     setSearchQuery(keyword);
   }, [keyword]);
 
+  const [favouritesToggled, setFavouritesToggled] = useState(false);
   if (loading) return <LoadingContainer />;
 
   return (
     <>
       <StyledSearchContainer>
         <Searchbar
+          icon={favouritesToggled ? 'heart' : 'heart-outline'}
+          onIconPress={() => setFavouritesToggled(toggled => !toggled)}
           value={searchQuery}
           onChangeText={query => setSearchQuery(query)}
           placeholder="Search Restuarants"
@@ -65,10 +68,10 @@ export default function Restaurants({ navigation }: AppProps): ReactElement {
           }}
         />
       </StyledSearchContainer>
+      {favouritesToggled && <FavouritesBar navigation={navigation} />}
       {restaurants.length ? (
         <FlatList<RestaurantCardProps>
           // eslint-disable-next-line react-native/no-inline-styles
-          removeClippedSubviews={false}
           contentContainerStyle={{ margin: 16 }}
           data={restaurants}
           renderItem={({ item }) => (

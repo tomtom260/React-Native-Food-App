@@ -3,9 +3,11 @@ import React, {
   createContext,
   useState,
   useCallback,
+  useEffect,
 } from 'react';
-import { Restaurant } from './restaurants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { Restaurant } from './restaurants';
 interface Favourites {
   favourites: Restaurant[];
   addToFavourites: (restaurant: Restaurant) => void;
@@ -33,6 +35,23 @@ export function FavouritesProvider({
       ),
     []
   );
+
+  useEffect(() => {
+    const loadFavourites = async () => {
+      const fav = await AsyncStorage.getItem('@favourites');
+      if (fav) setFavourites(JSON.parse(fav));
+    };
+
+    loadFavourites();
+  }, []);
+
+  useEffect(() => {
+    const saveFavourites = async () => {
+      await AsyncStorage.setItem('@favourites', JSON.stringify(favourites));
+    };
+
+    saveFavourites();
+  }, [favourites]);
 
   return (
     <FavouritesContext.Provider

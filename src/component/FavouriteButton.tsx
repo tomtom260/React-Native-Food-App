@@ -27,8 +27,8 @@ function FavouriteButton({
     <StyledTouchableOpacity
       onPress={() =>
         isFavourite
-          ? removeFromFavourites(restaurant as unknown as Restaurant)
-          : addToFavourites(restaurant as unknown as Restaurant)
+          ? removeFromFavourites(restaurant as Restaurant)
+          : addToFavourites(restaurant as Restaurant)
       }
     >
       <AntDesign
