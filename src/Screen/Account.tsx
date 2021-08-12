@@ -1,13 +1,38 @@
+import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Button } from 'react-native-paper';
+import styled from 'styled-components/native';
 import AccountsBackground from '../component/AccountsBackground';
+import { AuthNavigatorParamList } from '../navigation/AuthNavigator';
 
-function Account(): React.ReactElement {
+const StyledButton = styled(Button).attrs({
+  icon: 'lock-open-outline',
+  mode: 'contained',
+})`
+  background-color: ${({ theme }) => theme.colors.brand.primary};
+  margin-bottom: ${({ theme }) => theme.space[3]};
+`;
+
+type AccountsNavigationProp = StackNavigationProp<
+  AuthNavigatorParamList,
+  'Main'
+>;
+
+function Account({
+  navigation,
+}: {
+  navigation: AccountsNavigationProp;
+}): React.ReactElement {
   return (
     <AccountsBackground>
-      <View>
-        <Text>Hello</Text>
-      </View>
+      <>
+        <StyledButton onPress={() => navigation.navigate('Login')}>
+          Login
+        </StyledButton>
+        <StyledButton onPress={() => navigation.navigate('Register')}>
+          Register
+        </StyledButton>
+      </>
     </AccountsBackground>
   );
 }
