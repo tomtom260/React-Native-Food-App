@@ -19,7 +19,7 @@ export function AuthProivder({
 }): React.ReactElement {
   const [user, setUser] = useState<firebase.User | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const signIn = (email: string, password: string) => {
     setError(null);
@@ -71,11 +71,9 @@ export function AuthProivder({
   firebase.auth().onAuthStateChanged(
     usr => {
       if (usr) setUser(usr);
-      setLoading(false);
     },
     err => {
       setError(err.message);
-      setLoading(false);
     }
   );
 

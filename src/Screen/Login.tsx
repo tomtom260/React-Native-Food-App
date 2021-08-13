@@ -63,13 +63,17 @@ function Login(): React.ReactElement {
             onChangeText={text => setPassword(text)}
           />
           {error ? <StyledError>{error}</StyledError> : null}
-          <StyledButton
-            mode="contained"
-            icon="email"
-            onPress={() => signIn(email, password)}
-          >
-            {loading ? <LoadingContainer /> : 'Login'}
-          </StyledButton>
+          {loading ? (
+            <LoadingContainer size="small" />
+          ) : (
+            <StyledButton
+              mode="contained"
+              icon="email"
+              onPress={() => signIn(email, password)}
+            >
+              Login
+            </StyledButton>
+          )}
         </StyledContainer>
       </>
     </AccountsBackground>

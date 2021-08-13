@@ -72,13 +72,17 @@ function Regsiter(): React.ReactElement {
             onChangeText={text => setPasswordConfirm(text)}
           />
           {error ? <StyledError>{error}</StyledError> : null}
-          <StyledButton
-            mode="contained"
-            icon="lock-open-outline"
-            onPress={() => signUp(email, password, passwordConfirm)}
-          >
-            {loading ? <LoadingContainer /> : 'Register'}
-          </StyledButton>
+          {loading ? (
+            <LoadingContainer size="small" />
+          ) : (
+            <StyledButton
+              mode="contained"
+              icon="lock-open-outline"
+              onPress={() => signUp(email, password, passwordConfirm)}
+            >
+              Register
+            </StyledButton>
+          )}
         </StyledContainer>
       </>
     </AccountsBackground>
