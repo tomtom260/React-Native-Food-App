@@ -10,7 +10,7 @@ import { RestaurantsProvider } from '../context/state/restaurants';
 import { FavouritesProvider } from '../context/state/favourites';
 
 import MapsScreen from '../Screen/Maps';
-import SettingsScreen from '../Screen/Settings';
+import SettingsNavigator, { SettingsNavigaitorParamList } from './Settings';
 import RestaurantsNavigator, {
   RestaurantNavigatorParamList,
 } from './Restaurants';
@@ -18,7 +18,7 @@ import RestaurantsNavigator, {
 export type TabParamList = {
   'Restaurants Tab': NavigatorScreenParams<RestaurantNavigatorParamList>;
   Map: undefined;
-  Settings: undefined;
+  'Settings Stack': NavigatorScreenParams<SettingsNavigaitorParamList>;
 };
 
 const TabNavigation = createBottomTabNavigator<TabParamList>();
@@ -31,7 +31,7 @@ function TabNavigator(): ReactElement {
           screenOptions={({ route }) => ({
             headerShown: false,
             tabBarIcon: ({ color }): ReactElement | undefined => {
-              if (route.name === 'Settings') {
+              if (route.name === 'Settings Stack') {
                 return <Octicons name="settings" color={color} size={24} />;
               }
               if (route.name === 'Restaurants Tab') {
@@ -61,7 +61,10 @@ function TabNavigator(): ReactElement {
           />
 
           <TabNavigation.Screen name="Map" component={MapsScreen} />
-          <TabNavigation.Screen name="Settings" component={SettingsScreen} />
+          <TabNavigation.Screen
+            name="Settings Stack"
+            component={SettingsNavigator}
+          />
         </TabNavigation.Navigator>
       </FavouritesProvider>
     </RestaurantsProvider>

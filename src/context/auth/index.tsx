@@ -22,6 +22,7 @@ export function AuthProivder({
   const [loading, setLoading] = useState<boolean>(true);
 
   const signIn = (email: string, password: string) => {
+    setError(null);
     setLoading(true);
     firebase
       .auth()
@@ -36,9 +37,10 @@ export function AuthProivder({
   };
 
   const signUp = (email: string, password: string, passwordConfirm: string) => {
+    setError(null);
     setLoading(true);
     if (passwordConfirm !== password) {
-      setError('Passwords do not match');
+      return setError('Passwords do not match');
     }
     firebase
       .auth()
@@ -53,6 +55,7 @@ export function AuthProivder({
   };
 
   const signOut = async () => {
+    setError(null);
     setLoading(true);
     await firebase
       .auth()

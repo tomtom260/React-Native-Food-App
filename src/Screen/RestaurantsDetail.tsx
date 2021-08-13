@@ -25,7 +25,7 @@ function RestaurantsDetail({
 
   return (
     <>
-      <RestaurantCard {...item.item} />
+      <RestaurantCard restaurant={item.item} />
       <ScrollView>
         <List.Accordion
           title="Breakfast"

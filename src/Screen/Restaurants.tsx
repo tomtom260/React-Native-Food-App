@@ -1,11 +1,9 @@
 import React, { ReactElement, useState, useContext, useEffect } from 'react';
-import { FlatList, Text, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { Searchbar } from 'react-native-paper';
 import { StackNavigationProp } from '@react-navigation/stack';
-import RestaurantCard, {
-  RestaurantCardProps,
-} from '../component/RestaurantCard';
+import { CompositeNavigationProp } from '@react-navigation/native';
+
 import {
   RestaurantsContext,
   RestaurantsType,
@@ -14,24 +12,16 @@ import {
 import { RestaurantNavigatorParamList } from '../navigation/Restaurants';
 import LoadingContainer from '../component/LoadingContainer';
 import FavouritesBar from '../component/FavouritesBar';
+import RestaurantList from '../component/RestaurantList';
+import { SettingsNavigaitorParamList } from '../navigation/Settings';
 
 const StyledSearchContainer = styled.View`
   padding: ${({ theme }) => theme.space[3]};
 `;
 
-const StyledContainer = styled.View`
-  align-items: center;
-  justify-content: center;
-`;
-
-const renderRestaurantList = (item: RestaurantCardProps) => (
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  <RestaurantCard {...item} />
-);
-
-export type NavigationScreenProps = StackNavigationProp<
-  RestaurantNavigatorParamList,
-  'Restaurants'
+export type NavigationScreenProps = CompositeNavigationProp<
+  StackNavigationProp<RestaurantNavigatorParamList, 'Restaurants'>,
+  StackNavigationProp<SettingsNavigaitorParamList>
 >;
 
 interface AppProps {
@@ -40,7 +30,7 @@ interface AppProps {
 
 export default function Restaurants({ navigation }: AppProps): ReactElement {
   const [searchQuery, setSearchQuery] = useState<string>(keyword);
-  const { restaurants, keyword,setKeyword, loading, onSearch } =
+  const { restaurants, keyword, setKeyword, loading, onSearch } =
     useContext<RestaurantsType>(RestaurantsContext);
 
   useEffect(() => {
@@ -69,29 +59,7 @@ export default function Restaurants({ navigation }: AppProps): ReactElement {
         />
       </StyledSearchContainer>
       {favouritesToggled && <FavouritesBar navigation={navigation} />}
-      {restaurants.length ? (
-        <FlatList<RestaurantCardProps>
-          // eslint-disable-next-line react-native/no-inline-styles
-          contentContainerStyle={{ margin: 16 }}
-          data={restaurants}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Restaurant Detail', {
-                  item,
-                });
-              }}
-            >
-              {renderRestaurantList(item)}
-            </TouchableOpacity>
-          )}
-          keyExtractor={item => item.name!}
-        />
-      ) : (
-        <StyledContainer>
-          <Text>Empty</Text>
-        </StyledContainer>
-      )}
+      <RestaurantList navigation={navigation} restaurants={restaurants} />
     </>
   );
 }

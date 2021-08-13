@@ -1,13 +1,12 @@
 import { StackNavigationProp } from '@react-navigation/stack';
-import React from 'react';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { Button } from 'react-native-paper';
 import styled from 'styled-components/native';
 import LottieView from 'lottie-react-native';
 import AccountsBackground from '../component/AccountsBackground';
 import LoadingContainer from '../component/LoadingContainer';
 import { AuthContext } from '../context/auth';
-import { AuthNavigatorParamList } from '../navigation/AuthNavigator';
+import { AuthNavigatorParamList } from '../navigation/Auth';
 
 const StyledButton = styled(Button).attrs({
   mode: 'contained',
@@ -69,13 +68,17 @@ function Account({
           <StyledTitle>Meals To Go</StyledTitle>
           <StyledButton
             icon="lock-open-outline"
-            onPress={() => navigation.navigate('Login')}
+            onPress={() => {
+              navigation.navigate('Login');
+            }}
           >
             Login
           </StyledButton>
           <StyledButton
             icon="email"
-            onPress={() => navigation.navigate('Register')}
+            onPress={() => {
+              navigation.navigate('Register');
+            }}
           >
             Register
           </StyledButton>

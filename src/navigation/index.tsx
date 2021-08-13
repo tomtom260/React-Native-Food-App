@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import React, { useContext } from 'react';
 import { AuthContext } from '../context/auth';
-import AuthNavigator from './AuthNavigator';
+import AuthNavigator from './Auth';
 import TabNavigator from './TabNavigator';
 
 function Navigator(): React.ReactElement {

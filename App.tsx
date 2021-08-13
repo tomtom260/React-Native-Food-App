@@ -28,7 +28,6 @@ const StyledSafeAreaView = styled(SafeAreaView)`
   flex: 1;
   background-color: #ffffff;
 `;
-LogBox.ignoreAllLogs();
 function App(): ReactElement {
   const [oswaldLoaded] = useOswald({
     Oswald_400Regular,

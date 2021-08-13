@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Button, TextInput } from 'react-native-paper';
 import styled from 'styled-components/native';
 import AccountsBackground from '../component/AccountsBackground';
@@ -41,9 +41,7 @@ function Login(): React.ReactElement {
   const [password, setPassword] = React.useState<string>('');
   const { signIn, loading, error } = useContext(AuthContext);
 
-  return loading ? (
-    <LoadingContainer />
-  ) : (
+  return (
     <AccountsBackground>
       <>
         <StyledTitle>Meals To GO</StyledTitle>
@@ -70,7 +68,7 @@ function Login(): React.ReactElement {
             icon="email"
             onPress={() => signIn(email, password)}
           >
-            Login
+            {loading ? <LoadingContainer /> : 'Login'}
           </StyledButton>
         </StyledContainer>
       </>

@@ -60,7 +60,11 @@ export interface RestaurantCardProps {
   placeId: string;
 }
 
-function RestaurantCard(restaurant: RestaurantCardProps): ReactElement {
+function RestaurantCard({
+  restaurant,
+}: {
+  restaurant: RestaurantCardProps;
+}): ReactElement {
   const {
     name = 'Some Restaurant',
     photos = [

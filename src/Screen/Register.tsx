@@ -42,9 +42,7 @@ function Regsiter(): React.ReactElement {
   const [passwordConfirm, setPasswordConfirm] = useState<string>('');
   const { signUp, loading, error } = useContext(AuthContext);
 
-  return loading ? (
-    <LoadingContainer />
-  ) : (
+  return (
     <AccountsBackground>
       <>
         <StyledTitle>Meals To GO</StyledTitle>
@@ -79,7 +77,7 @@ function Regsiter(): React.ReactElement {
             icon="lock-open-outline"
             onPress={() => signUp(email, password, passwordConfirm)}
           >
-            Regsiter
+            {loading ? <LoadingContainer /> : 'Register'}
           </StyledButton>
         </StyledContainer>
       </>
