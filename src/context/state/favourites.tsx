@@ -8,6 +8,8 @@ import React, {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Restaurant } from './restaurants';
+import { useContext } from 'react';
+import { AuthContext } from '../auth';
 interface Favourites {
   favourites: Restaurant[];
   addToFavourites: (restaurant: Restaurant) => void;
@@ -22,6 +24,7 @@ export function FavouritesProvider({
   children: ReactElement;
 }): ReactElement {
   const [favourites, setFavourites] = useState<Restaurant[]>([]);
+  const { user } = useContext(AuthContext);
 
   const addToFavourites: Favourites['addToFavourites'] = useCallback(
     restaurant => setFavourites(fav => [...fav, restaurant]),
@@ -38,20 +41,24 @@ export function FavouritesProvider({
 
   useEffect(() => {
     const loadFavourites = async () => {
-      const fav = await AsyncStorage.getItem('@favourites');
+      const fav = await AsyncStorage.getItem(`@favourites-${user?.uid}`);
       if (fav) setFavourites(JSON.parse(fav));
+      else setFavourites([]);
     };
 
     loadFavourites();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     const saveFavourites = async () => {
-      await AsyncStorage.setItem('@favourites', JSON.stringify(favourites));
+      await AsyncStorage.setItem(
+        `@favourites-${user?.uid}`,
+        JSON.stringify(favourites)
+      );
     };
 
     saveFavourites();
-  }, [favourites]);
+  }, [favourites, user]);
 
   return (
     <FavouritesContext.Provider

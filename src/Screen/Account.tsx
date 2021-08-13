@@ -3,6 +3,7 @@ import React from 'react';
 import { useContext } from 'react';
 import { Button } from 'react-native-paper';
 import styled from 'styled-components/native';
+import LottieView from 'lottie-react-native';
 import AccountsBackground from '../component/AccountsBackground';
 import LoadingContainer from '../component/LoadingContainer';
 import { AuthContext } from '../context/auth';
@@ -29,6 +30,15 @@ const StyledTitle = styled.Text`
   margin-bottom: 30px;
 `;
 
+const StyledAnimationWrapper = styled.View`
+  width: 100%;
+  height: 40%;
+  position: absolute;
+  top: 30px;
+  z-index: 10000;
+  padding: ${({ theme }) => theme.space[2]};
+`;
+
 type AccountsNavigationProp = StackNavigationProp<
   AuthNavigatorParamList,
   'Main'
@@ -44,23 +54,34 @@ function Account({
   return loading ? (
     <LoadingContainer />
   ) : (
-    <AccountsBackground>
-      <StyledContainer>
-        <StyledTitle>Meals To Go</StyledTitle>
-        <StyledButton
-          icon="lock-open-outline"
-          onPress={() => navigation.navigate('Login')}
-        >
-          Login
-        </StyledButton>
-        <StyledButton
-          icon="email"
-          onPress={() => navigation.navigate('Register')}
-        >
-          Register
-        </StyledButton>
-      </StyledContainer>
-    </AccountsBackground>
+    <>
+      <StyledAnimationWrapper>
+        <LottieView
+          loop={false}
+          key="animation"
+          resizeMode="cover"
+          autoPlay
+          source={require('../../assets/watermelon.json')}
+        />
+      </StyledAnimationWrapper>
+      <AccountsBackground>
+        <StyledContainer>
+          <StyledTitle>Meals To Go</StyledTitle>
+          <StyledButton
+            icon="lock-open-outline"
+            onPress={() => navigation.navigate('Login')}
+          >
+            Login
+          </StyledButton>
+          <StyledButton
+            icon="email"
+            onPress={() => navigation.navigate('Register')}
+          >
+            Register
+          </StyledButton>
+        </StyledContainer>
+      </AccountsBackground>
+    </>
   );
 }
 

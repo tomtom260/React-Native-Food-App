@@ -20,14 +20,13 @@ import {
 
 import { ThemeProvider } from 'styled-components';
 import theme from './src/context/theme';
-import { RestaurantsProvider } from './src/context/state/restaurants';
 import Navigator from './src/navigation';
-import { FavouritesProvider } from './src/context/state/favourites';
 import LoadingContainer from './src/component/LoadingContainer';
 import { AuthProivder } from './src/context/auth';
 
 const StyledSafeAreaView = styled(SafeAreaView)`
   flex: 1;
+  background-color: #ffffff;
 `;
 LogBox.ignoreAllLogs();
 function App(): ReactElement {
@@ -56,13 +55,9 @@ function App(): ReactElement {
     <>
       <StyledSafeAreaView>
         <AuthProivder>
-          <RestaurantsProvider>
-            <FavouritesProvider>
-              <ThemeProvider theme={theme}>
-                <Navigator />
-              </ThemeProvider>
-            </FavouritesProvider>
-          </RestaurantsProvider>
+          <ThemeProvider theme={theme}>
+            <Navigator />
+          </ThemeProvider>
         </AuthProivder>
       </StyledSafeAreaView>
       <StatusBar />
